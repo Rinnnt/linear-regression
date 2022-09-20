@@ -1,6 +1,5 @@
 #%%
 
-import numpy as np
 import random
 import math
 import matplotlib.pyplot as plt
@@ -11,9 +10,10 @@ class LinReg:
         self.weight = weight
         self.bias = bias
         self.learning_rate = learning_rate
+        self.mse_history = []
     
     def fit(self, x, y, verbose=False):
-        convergence_window = 0.00000005
+        convergence_window = 10 ** (-7)
         converged = False
         epoch = 0
         while not converged:
@@ -23,8 +23,10 @@ class LinReg:
                 converged = True
             
             self.weight, self.bias = new_weight, new_bias
-            if verbose:
-                print(f"Epoch {epoch} MSE: {self.__mse(self.predict(x), y)}")
+            if verbose and epoch % 10000 == 0:
+                mse = self.__mse(self.predict(x), y)
+                self.mse_history.append(mse)
+                print(f"Epoch {epoch} MSE: {mse}")
         
     def __gradient_descent(self, x, y):
         preds = self.predict(x)
@@ -49,18 +51,24 @@ if __name__ == "__main__":
     WEIGHT = 3
     BIAS = 5
     NOISE_LEVEL = 1
-    TRAINING_EXAMPLES = 5
+    TRAINING_EXAMPLES = 20
 
     x = [random.random() * 10 for i in range(TRAINING_EXAMPLES)]
     noise = [(random.random() - 0.5) * NOISE_LEVEL for i in range(TRAINING_EXAMPLES)]
     y = [ (WEIGHT * xi + BIAS) + ni for xi, ni in zip(x, noise)]
     
-    print(x, y)
-    linreg_model = LinReg(0, 0, 0.0001)
+
+    # Fit model 
+    linreg_model = LinReg(0, 0, 0.0003)
     linreg_model.fit(x, y, verbose=True)
     print(linreg_model.weight)
     print(linreg_model.bias)
-    
+
+    # Visualize
+    fig1 = plt.figure("Learning Curve")
+    plt.plot([(x+1) * 10000 for x in range(len(linreg_model.mse_history))], linreg_model.mse_history)
+
+    fig2 = plt.figure("Fitted Line")
     plt.plot(x, y, 'bo')
     plt.plot(x, linreg_model.predict(x))
 
