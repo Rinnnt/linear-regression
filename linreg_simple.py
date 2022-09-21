@@ -16,6 +16,7 @@ class LinReg:
         convergence_window = 10 ** (-7)
         converged = False
         epoch = 0
+
         while not converged:
             epoch += 1
             new_weight, new_bias = self.__gradient_descent(x, y)
@@ -23,6 +24,7 @@ class LinReg:
                 converged = True
             
             self.weight, self.bias = new_weight, new_bias
+
             if verbose and epoch % 10000 == 0:
                 mse = self.__mse(self.predict(x), y)
                 self.mse_history.append(mse)
