@@ -61,8 +61,6 @@ class KMeans:
             dist[i] = dist[i] - self.centroids[int(x[i, -1])]
         return np.mean(np.linalg.norm(dist, axis=1))
 
-    def predict(x):
-        pass
 
 if __name__ == "__main__":
 

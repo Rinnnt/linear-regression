@@ -1,5 +1,4 @@
 #%%
-from pyexpat.errors import XML_ERROR_NOT_STANDALONE
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -84,6 +83,7 @@ if __name__ == "__main__":
 
     preds = model.predict(x_test)
     
+    plt.scatter(x[:, 1:], y)
     plt.plot(x_test_features, preds)
     
     print(model.weights)
