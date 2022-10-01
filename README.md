@@ -28,3 +28,8 @@ A Unsupervised clustering algorithm that groups together data points by their pr
 
 ![k means original plot](images/k_means_1.png)
 ![k means prediction plot](images/k_means_2.png)
+
+## Anomaly Detection
+Unsupervised algorithm that fits gaussian parameters onto the training data, and predicts anomalies if the probability of new data points is below a certain threshold 'epsilon'
+
+![Anomalous point plot against training data](images/anomaly_detection.png)
